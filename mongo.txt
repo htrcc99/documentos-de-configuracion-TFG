@@ -1,0 +1,256 @@
+use agata;
+//no se vera reflejada en "show dbs" hasta crear la colecion
+
+db.createCollection("clients", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: [ "id", "name", "surname", "email", "date", "phone", "genre", "password" ],
+         properties: {
+            id: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            name: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            surname: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            email: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            date: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            },
+            phone: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            genre: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            password: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            }
+         }
+      }
+   }
+});
+
+db.createCollection("company", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: [ "id", "name", "email", "address", "latitude", "longitude", "CIF", "phone", "password", "photo", "socialNetworks" ],
+         properties: {
+            id: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            name: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            email: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            address: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            latitude: {
+               bsonType: "double",
+               description: "must be a double and is required"
+            },
+            longitude: {
+               bsonType: "double",
+               description: "must be a double and is required"
+            },
+            CIF: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            phone: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            socialNetworks: {
+               bsonType: "array",
+               description: "must be an array"
+            },
+            photo: {
+               bsonType: "string",
+               description: "must be an string"
+            },
+            password: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            }
+         }
+      }
+   }
+});
+
+db.createCollection("company_client", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: [ "id", "clientId", "companyId", "lastIteration" ],
+         properties: {
+            id: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            clientId: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            companyId: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            lastIteration: {
+               bsonType: "double",
+               description: "must be a double and is required"
+            }
+         }
+      }
+   }
+});
+
+db.createCollection("products", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: [ "id", "name", "amount", "barcode", "companyId", "description", "price", "photo", "category", "characteristics" ],
+         properties: {
+            id: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            name: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            amount: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            }, 
+            barcode: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            companyId: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            description: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            price: {
+               bsonType: "double",
+               description: "must be a double and is required"
+            },
+            photo: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            category: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            characteristics: {
+               bsonType: "object",
+               description: "must be an object and is required"
+            }
+         }
+      }
+   }
+});
+
+db.createCollection("purchases", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: [ "id", "companyId", "clientId", "date", "products" ],
+         properties: {
+            id: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            companyId: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            clientId: {
+               bsonType: "string",
+               description: "must be a string and is required"
+            },
+            date: {
+               bsonType: "int",
+               description: "must be an integer and is required"
+            }, 
+            products: {
+               bsonType: "array",
+               description: "must be a array of products and is required",
+               uniqueItems: true,
+               items: {
+                  bsonType: "object",
+                  required: [ "id", "name", "amount", "barcode", "companyId", "description", "price", "photo", "category", "characteristics" ],
+                  properties: {
+                     id: {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                     },
+                     name: {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                     },
+                     amount: {
+                        bsonType: "int",
+                        description: "must be an integer and is required"
+                     }, 
+                     barcode: {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                     },
+                     companyId: {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                     },
+                     description: {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                     },
+                     price: {
+                        bsonType: "double",
+                        description: "must be a double and is required"
+                     },
+                     photo: {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                     },
+                     category: {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                     },
+                     characteristics: {
+                        bsonType: "object",
+                        description: "must be an object and is required"
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+});
